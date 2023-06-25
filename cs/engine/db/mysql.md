@@ -22,6 +22,18 @@ update t_x1 t set c1 = (select c1 from (
 update t_xx a inner join t_xx b on a.id=b.id set a.time1 = b.time2
 ```
 
+```sql
+update t1 dst set field_xx = (
+  select merge1.field_xx as field_xx from (
+    select oldtd.field_xx1, oldtd.field_xx2, newtd.field_xx
+	  from t2 as newtd inner join t1 oldtd 
+	  on oldtd.field_xx2 = newtd.field_xx2
+	    and oldtd.field_xx1 = newtd.field_xx1
+  ) merge1 where merge1.field_xx2 = dst.field_xx2 and merge1.field_xx1 = dst.field_xx1
+ ) where field_xx1 in (select field_xx1 from t2)
+
+```
+
 #### 增加索引：add  index
 ```sql
 alter table t_x1 add INDEX INDEX_NAME (`name`, `xx`);
